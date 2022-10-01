@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF1305D728E802B8004F37C8 /* Date.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF1305D528E802B8004F37C8 /* Date.cpp */; };
+		CF1305DA28E8039D004F37C8 /* TimeRange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF1305D828E8039D004F37C8 /* TimeRange.cpp */; };
 		CF1DF81C28E149E4005AB2B0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF1DF81B28E149E4005AB2B0 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CF1305D528E802B8004F37C8 /* Date.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Date.cpp; sourceTree = "<group>"; };
+		CF1305D628E802B8004F37C8 /* Date.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Date.hpp; sourceTree = "<group>"; };
+		CF1305D828E8039D004F37C8 /* TimeRange.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TimeRange.cpp; sourceTree = "<group>"; };
+		CF1305D928E8039D004F37C8 /* TimeRange.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TimeRange.hpp; sourceTree = "<group>"; };
 		CF1DF81828E149E4005AB2B0 /* ENSC 251 LAB 1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ENSC 251 LAB 1"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF1DF81B28E149E4005AB2B0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				CF1DF81B28E149E4005AB2B0 /* main.cpp */,
+				CF1305D528E802B8004F37C8 /* Date.cpp */,
+				CF1305D828E8039D004F37C8 /* TimeRange.cpp */,
+				CF1305D928E8039D004F37C8 /* TimeRange.hpp */,
+				CF1305D628E802B8004F37C8 /* Date.hpp */,
 			);
 			path = "ENSC 251 LAB 1";
 			sourceTree = "<group>";
@@ -120,6 +130,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF1DF81C28E149E4005AB2B0 /* main.cpp in Sources */,
+				CF1305DA28E8039D004F37C8 /* TimeRange.cpp in Sources */,
+				CF1305D728E802B8004F37C8 /* Date.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
