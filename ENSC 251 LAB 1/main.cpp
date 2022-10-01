@@ -11,31 +11,32 @@ private:
 public:
     //Constructors
     Date();
-    Date(const int &month, const int &day);
-    Date(const int &month, const int &day, const int &time);
+    Date(const int &month, const int &day);// Constructors with two initial parameters
+    Date(const int &month, const int &day, const int &time);//Constructors with three initial parameters
     //Getters
-    int getMonth() const;
-    int getDay() const;
-    bool getAppointed(const int&) const;
+    int getMonth() const; // Get the value of month
+    int getDay() const;// Get value of day
+    bool getAppointed(const int&) const; // Check Appoinment time
     //Setters
    
-    void setMonth(const int);
-    void setDay(const int);
-    void setAppointed(int&, int&, int&, int&);
+    void setMonth(const int);// Record the month of appoinment
+    void setDay(const int);// Record the day of appoinment
+    void setAppointed(int&, int&, int&, int&);// Record the hour of appoinmet and minute of appoinment
     //Additional member functions
     bool isHoliday(int month, int day) const;   //Check if the date is a holiday
     bool isWeekend(int Month, int Day ) const;   //Check if the date is a weekend
     bool isValidDay(int month, int day) const;     //Check if the user input falls in the assumed range.
-    void output (ostream& outs) const;
-    void printFreeTimeSlots () const;
+    void output (ostream& outs) const;//
+    void printFreeTimeSlots () const;// Print the all free time
+    void printAppointedTimeSlots() const;// Print the all appointed time
     //Friend member functions
     friend bool equal(const Date&, const Date&);
 };
 
-const int Holidays[4][2] = {{9,19},{9,30},{10,12},{11,11}};
+const int Holidays[4][2] = {{9,19},{9,30},{10,12},{11,11}};// Seeting Information of holidays
 const int Weekend[26][2] = {{9,10},{9,11},{9,17},{9,18},{9,24},{9,25},{10,1},{10,2},{10,8},
 {10,9},{10,15},{10,16},{10,22},{10,23},{10,29},{10,30},{11,5},{11,6},{11,12},{11,13},
-{11,19},{11,20},{11,26},{11,27},{12,3},{12,4}};
+{11,19},{11,20},{11,26},{11,27},{12,3},{12,4}};// Seeting Information of Weekend
 
 
 Date::Date()
@@ -58,6 +59,146 @@ Date::Date(const int &month, const int &day, const int &time)
 int Date::getMonth() const
 {
     return month;
+}
+void Date::printFreeTimeSlots() const
+{
+  if (month == 9)
+  {
+    cout << "September " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        if(appointed[i] == 0) // To find free time
+        {
+            // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 is free" << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 is free" << endl;
+        }
+        
+    }
+  }
+  if (month == 10)
+  {
+    cout << "October " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        // To find free time
+        if(appointed[i] == 0)
+        {
+            // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 is free" << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 is free" << endl;
+        }
+        
+    }
+  }
+  if (month == 11)
+  {
+    cout << "November " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        // To find free time
+        if(appointed[i] == 0)
+        {
+           // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 is free" << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 is free" << endl;
+        }
+        
+    }
+  }
+  if (month == 12)
+  {
+    cout << "December " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        // To find free time
+        if(appointed[i] == 0)
+        {
+            // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 is free" << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 is free" << endl;
+        }
+        
+    }
+  }
+
+
+}
+void Date::printAppointedTimeSlots() const
+{
+   if (month == 9)
+  {
+    cout << "September " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        //To find appointment time
+        if(appointed[i] == 1)
+        {
+            // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 have been appointed " << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 have been appointed" << endl;
+        }
+        
+    }
+  }
+  if (month == 10)
+  {
+    cout << "October " << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        //To find appointment time
+        if(appointed[i] == 1)
+        {
+           // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 have been appointed " << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 have been appointed" << endl;
+        }
+    }
+  }
+  if (month == 11)
+  {
+    cout << "November" << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        //To find appointment time
+        if(appointed[i] == 1)
+        {
+            // Based on the index of appointment to get the cooresponding time
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 have been appointed " << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 have been appointed" << endl;
+        }
+    }
+  }
+  if (month == 12)
+  {
+    //To find appointment time
+    cout << "December" << day << endl;
+    for(int i = 0; i < 48; i++)
+    {
+        // Based on the index of appointment to get the cooresponding time
+        if(appointed[i] == 1)
+        {
+           if(i % 2 == 1)
+            cout << "The time " << i /2 <<":30"<< "to" <<i/2+1 <<":00 have been appointed " << endl;
+           else
+            cout << "The time " << i /2 <<":00"<< "to" <<i/2 <<":30 have been appointed" << endl;
+        }
+    }
+  }
 }
 int Date::getDay() const
 {
@@ -82,10 +223,11 @@ void Date::setDay( int day)
 }
 void Date::setAppointed(int &beginHour, int &beginMinute, int &endHour, int &endMinute)
 {
+    // Transfor the time to corresponding appointed index
     int BeginIndex, EndIndex;
     BeginIndex = 2 * beginHour + beginMinute / 30 ;
     EndIndex = 2 * endHour + endMinute / 30;
-    for(int i = BeginIndex; i < EndIndex + 1; i++)
+    for(int i = BeginIndex; i < EndIndex; i++)
     {
         if (appointed[i] == 1)
         {
@@ -93,13 +235,14 @@ void Date::setAppointed(int &beginHour, int &beginMinute, int &endHour, int &end
             exit(1);
         }
     }
-    for(int i = BeginIndex; i < EndIndex + 1; i++)
+    for(int i = BeginIndex; i < EndIndex ; i++)
     {
         appointed[i] = 1;
 
     }
     cout << "Congratulation! Appointment is Fine" << endl;
 }
+// Judge the day is or not holiday
 bool Date::isHoliday(int month, int day) const
 {
     for(int i = 0; i < 4; i++)
@@ -112,6 +255,7 @@ bool Date::isHoliday(int month, int day) const
     }
     return false;
 }
+// Judge the day is or not weekend
 bool Date::isWeekend(int month, int day) const
 {
    for(int i = 0; i < 26; i++)
@@ -187,10 +331,7 @@ void Date::output(ostream &outs) const
         exit(1);
     }
 }
-void Date::printFreeTimeSlots() const
-{
-    
-}
+
 bool equal(const Date &date1 , const Date &date2)
 {
     return (date1.day == date2.day && date1.month == date2.month);
@@ -261,11 +402,13 @@ int TimeRange::getendMinute() const
 {
     return endMinute;
 }
+// To out put information of hour and time
 void TimeRange::output(ostream &outs) const
 {
     outs << "Check in of appoinment is" << setw(2) << beginHour <<":" << setw(2) << beginMinute << endl;
     outs << "Check out of appoinment is" << setw(2) << endHour <<":" << setw(2) << endMinute << endl;
 }
+// Check the appointment day is the same day
 bool TimeRange::isValidTime(const int &newbeginHour, const int &newbeginMinute, const int &newendHour, const int newendMinute) const
 {
     if((newbeginHour < 0) || (newbeginHour > 23) || (newendHour < 0) || (newendHour > 23) || (newendHour < newbeginHour))
@@ -292,8 +435,8 @@ bool TimeRange::isValidTime(const int &newbeginHour, const int &newbeginMinute, 
 int main()
 {
     Date planner;
-    TimeRange h;
-    bool am, is, are, cor;
+    TimeRange appointedTime;
+    bool flagOfDay,flagOfWeekend,flagOfHoliday, flag;
     int appointmentEndMonth, appointmentEndDay, NHour, Nminute;
     int appointmentBeginMonth, appointmentBeginDay,startHour, startMinute;
     cout << "Enter your BeginMonth Number of your Appoinmet " << endl;
@@ -312,37 +455,35 @@ int main()
     cin >> NHour;
     cout << "Enter your End time of Minute" << endl;
     cin >> Nminute;
-    if ((appointmentBeginMonth != appointmentEndMonth)  || (appointmentBeginDay != appointmentEndDay))
+    if ((appointmentBeginMonth != appointmentEndMonth)  || (appointmentBeginDay != appointmentEndDay)) //Test the appointment is valid or not
     {
         cout <<"Have to input the same day" << endl;
     }
     else
     {
-      are = planner.isValidDay(appointmentEndMonth, appointmentEndDay);
-      am = planner.isWeekend(appointmentEndMonth, appointmentEndDay);
-      is = planner.isHoliday(appointmentEndMonth, appointmentEndDay);
-      if((are == true) && (am == false) && (is == false))
+      planner = Date(appointmentEndMonth, appointmentEndDay);
+      flagOfDay = planner.isValidDay(appointmentEndMonth, appointmentEndDay);
+      flagOfWeekend = planner.isWeekend(appointmentEndMonth, appointmentEndDay);
+      flagOfHoliday = planner.isHoliday(appointmentEndMonth, appointmentEndDay);
+      if((flagOfDay == true) && (flagOfWeekend == false) && (flagOfHoliday == false))
      {
-        cor = h.isValidTime(startHour, startMinute, NHour, Nminute);
-        if(cor == false)
+        flag = appointedTime.isValidTime(startHour, startMinute, NHour, Nminute);
+        if(flag == false)
         {
             cout<<"Appointment time is not consistent with requirment"<< endl;
             exit(1);
         }
         else
         {
+
             planner.setMonth(appointmentEndMonth);
             planner.setDay(appointmentEndDay);
             planner.setAppointed(startHour, startMinute,NHour,Nminute);
         }
+     planner.printFreeTimeSlots();
+      planner.printAppointedTimeSlots();
      }
     }
-
-    cout<< h.getendHour()<< endl;
-   cout<<planner.getDay() << endl;
-    //cout <<Planner.getAppointed()<< endl/*
-   
-
 
     return 0;
 }
