@@ -1,14 +1,348 @@
-//
-//  main.cpp
-//  ENSC 251 LAB 1
-//
-//  Created by Luo LanQing on 2022/9/25.
-//
-
 #include <iostream>
+#include <iomanip>
+using namespace std;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+class Date
+{
+private:
+    int month;
+    int day;
+    bool appointed[48];
+public:
+    //Constructors
+    Date();
+    Date(const int &month, const int &day);
+    Date(const int &month, const int &day, const int &time);
+    //Getters
+    int getMonth() const;
+    int getDay() const;
+    bool getAppointed(const int&) const;
+    //Setters
+   
+    void setMonth(const int);
+    void setDay(const int);
+    void setAppointed(int&, int&, int&, int&);
+    //Additional member functions
+    bool isHoliday(int month, int day) const;   //Check if the date is a holiday
+    bool isWeekend(int Month, int Day ) const;   //Check if the date is a weekend
+    bool isValidDay(int month, int day) const;     //Check if the user input falls in the assumed range.
+    void output (ostream& outs) const;
+    void printFreeTimeSlots () const;
+    //Friend member functions
+    friend bool equal(const Date&, const Date&);
+};
+
+const int Holidays[4][2] = {{9,19},{9,30},{10,12},{11,11}};
+const int Weekend[26][2] = {{9,10},{9,11},{9,17},{9,18},{9,24},{9,25},{10,1},{10,2},{10,8},
+{10,9},{10,15},{10,16},{10,22},{10,23},{10,29},{10,30},{11,5},{11,6},{11,12},{11,13},
+{11,19},{11,20},{11,26},{11,27},{12,3},{12,4}};
+
+
+Date::Date()
+{
+
+}
+Date::Date(const int &month, const int &day)
+{
+    this->month = month;
+    this->day = day;
+    for (int i = 0; i < 48; i++)
+        appointed[i] = 0;
+}
+Date::Date(const int &month, const int &day, const int &time)
+{
+    this->month = month;
+    this->day = day;
+    appointed[time] = false;
+}
+int Date::getMonth() const
+{
+    return month;
+}
+int Date::getDay() const
+{
+    return day;
+}
+bool Date::getAppointed(const int &time) const
+{
+    return appointed[time];
+}
+void Date::setMonth(int month)
+{
+    if((month < 9)||(month > 12))
+    {
+        cout << "You just only can choose September, October, November, December" << endl;
+        exit(1);
+    }
+    this->month = month;
+}
+void Date::setDay( int day)
+{
+    this->day = day;
+}
+void Date::setAppointed(int &beginHour, int &beginMinute, int &endHour, int &endMinute)
+{
+    int BeginIndex, EndIndex;
+    BeginIndex = 2 * beginHour + beginMinute / 30 ;
+    EndIndex = 2 * endHour + endMinute / 30;
+    for(int i = BeginIndex; i < EndIndex + 1; i++)
+    {
+        if (appointed[i] == 1)
+        {
+            cout << "This time have been booked" << endl;
+            exit(1);
+        }
+    }
+    for(int i = BeginIndex; i < EndIndex + 1; i++)
+    {
+        appointed[i] = 1;
+
+    }
+    cout << "Congratulation! Appointment is Fine" << endl;
+}
+bool Date::isHoliday(int month, int day) const
+{
+    for(int i = 0; i < 4; i++)
+    {
+        if((month == Holidays[i][0]) && (day == Holidays[i][1]))
+        {
+            cout << "It is holiday" << endl;
+            return true;
+        }
+    }
+    return false;
+}
+bool Date::isWeekend(int month, int day) const
+{
+   for(int i = 0; i < 26; i++)
+   {
+     if((month == Weekend[i][0]) && (day == Weekend[i][1]) )
+      {
+        cout <<"It is weekend day" << endl;
+        return true;
+      }
+   }
+   return false;
+}
+bool Date::isValidDay(int month, int day) const
+{
+    //Check if the input month value is valid
+    if (month < 9 || month > 12)
+    {
+        cout << "The input month is invalid, please input a number between 9 and 12." << endl;
+        return false;
+    }
+    //If the input month value is false the function will return false and exit, otherwise it will contine execute.
+    
+    //Check if the day input is valid.
+    //If month is equal to 9, the valid input should between 7 and 30
+    if (month == 9)
+    {
+        if (day < 7 || day > 30)
+        {
+            cout << "The input day is invalid, please input a number between 7 and 30." << endl;
+            return false;
+        }
+    }
+    //If month is equal to 10, the valid input should between 1 and 31
+    if (month == 10)
+    {
+        if (day < 1 || day > 31)
+        {
+            cout << "The input day is invalid, please input a number between 1 and 31." << endl;
+            return false;
+        }
+    }
+    //If month is equal to 11, the valid input should between 1 and 30
+    if (month == 11)
+    {
+        if (day < 1 || day > 30)
+        {
+            cout << "The input day is invalid, please input a number between 1 and 30." << endl;
+            return false;
+        }
+    }
+    //If month is equal to 12, the valid input should between 1 and 6
+    if (month == 12)
+    {
+        if (day < 1 || day > 6)
+        {
+            cout << "The input day is invalid, please input a number between 1 and 6." << endl;
+            return false;
+        }
+    }
+    return true;
+}
+void Date::output(ostream &outs) const
+{
+    //Use isHoliday member function to check if the day is a holiday.
+    if (isHoliday(this->month, this->day))
+    {
+        outs << month << "." << day << "is a holiday, no appoints allowed." << endl;
+        exit(1);
+    }
+    else if (isWeekend(this->month, this->day))  //Use isWeekend function to check if the day is a weenkend.
+    {
+        outs << month << "." << day << "is a weenkend, no appoints allowed." << endl;
+        exit(1);
+    }
+}
+void Date::printFreeTimeSlots() const
+{
+    
+}
+bool equal(const Date &date1 , const Date &date2)
+{
+    return (date1.day == date2.day && date1.month == date2.month);
+}
+
+class TimeRange{
+private:
+    int beginHour;
+    int beginMinute;
+    int endHour;
+    int endMinute;
+public:
+    //Constructors
+    TimeRange();
+    TimeRange (const int &newbeginHour,const int &newbeginMinute,const int &newendHour,const int &newendMinute);
+    //Setters
+    void setbeginHour(const int &newbeginHour);
+    void setbeginMinute(const int &newbeginMinute);
+    void setendHour(const int &newendHour);
+    void setendMinute(const int &newendMinute);
+    //Getters
+    int getbeginHour() const;
+    int getbeginMinute() const;
+    int getendHour() const;
+    int getendMinute()const;
+    //Additional member functions
+    void output(ostream& outs) const;
+    bool isValidTime(const int &newbeginHour,const int &newbeginMinute,const int &newendHour,const int newendMinute) const;
+};
+TimeRange::TimeRange()
+{}
+TimeRange::TimeRange (const int &newbeginHour,const int &newbeginMinute,const int &newendHour,const int &newendMinute)
+{
+    this->beginHour = newbeginHour;
+    this->beginMinute = newbeginMinute;
+    this->endHour = newendHour;
+    this->endMinute = newendMinute;
+}
+void TimeRange::setbeginHour(const int &newbeginHour)
+{
+    this->beginHour = newbeginHour;
+}
+void TimeRange::setbeginMinute(const int &newbeginMinute)
+{
+    this->beginMinute = newbeginMinute;
+}
+void TimeRange::setendHour(const int &newendHour)
+{
+    this->endHour = newendHour;
+}
+void TimeRange::setendMinute(const int &newendMinute)
+{
+    this->endMinute = newendMinute;
+}
+int TimeRange::getbeginHour() const
+{
+    return beginHour;
+}
+int TimeRange::getbeginMinute() const
+{
+    return beginMinute;
+}
+int TimeRange::getendHour() const
+{
+    return endHour;
+}
+int TimeRange::getendMinute() const
+{
+    return endMinute;
+}
+void TimeRange::output(ostream &outs) const
+{
+    outs << "Check in of appoinment is" << setw(2) << beginHour <<":" << setw(2) << beginMinute << endl;
+    outs << "Check out of appoinment is" << setw(2) << endHour <<":" << setw(2) << endMinute << endl;
+}
+bool TimeRange::isValidTime(const int &newbeginHour, const int &newbeginMinute, const int &newendHour, const int newendMinute) const
+{
+    if((newbeginHour < 0) || (newbeginHour > 23) || (newendHour < 0) || (newendHour > 23) || (newendHour < newbeginHour))
+    {
+      cout << "Illegal Hour input. Aborting Problem" << endl;
+      exit(1);
+    }
+    if(!((newbeginMinute == 0) || (newbeginMinute == 30) || (newendMinute == 0) || (newendMinute == 30)))
+    {
+     cout << "Illegal Minute input. The number of minuts must be 0 or 30" << endl;
+     exit(1);
+    }
+    if((newbeginHour == newendHour) && (newbeginMinute == 30) && (newendMinute == 0))
+    {
+     cout << "The appoinment time order is wrong" << endl;
+     exit(1);
+    }
+    return true;
+    
+}
+
+
+
+int main()
+{
+    Date planner;
+    TimeRange h;
+    bool am, is, are, cor;
+    int appointmentEndMonth, appointmentEndDay, NHour, Nminute;
+    int appointmentBeginMonth, appointmentBeginDay,startHour, startMinute;
+    cout << "Enter your BeginMonth Number of your Appoinmet " << endl;
+    cin >> appointmentBeginMonth;
+    cout << "Enter your BeginDay  Number of your Appoinmet" << endl;
+    cin >> appointmentBeginDay;
+    cout << "Enter your End Month Number of your Appoinmet " << endl;
+    cin >> appointmentEndMonth;
+    cout << "Enter your End Day  Number of your Appoinmet" << endl;
+    cin >> appointmentEndDay;
+    cout << "Enter your Start time of Hour" << endl;
+    cin >> startHour;
+    cout << "Enter your Start time of Minute" << endl;
+    cin >> startMinute;
+    cout << "Enter your End time of Hour " << endl;
+    cin >> NHour;
+    cout << "Enter your End time of Minute" << endl;
+    cin >> Nminute;
+    if ((appointmentBeginMonth != appointmentEndMonth)  || (appointmentBeginDay != appointmentEndDay))
+    {
+        cout <<"Have to input the same day" << endl;
+    }
+    else
+    {
+      are = planner.isValidDay(appointmentEndMonth, appointmentEndDay);
+      am = planner.isWeekend(appointmentEndMonth, appointmentEndDay);
+      is = planner.isHoliday(appointmentEndMonth, appointmentEndDay);
+      if((are == true) && (am == false) && (is == false))
+     {
+        cor = h.isValidTime(startHour, startMinute, NHour, Nminute);
+        if(cor == false)
+        {
+            cout<<"Appointment time is not consistent with requirment"<< endl;
+            exit(1);
+        }
+        else
+        {
+            planner.setMonth(appointmentEndMonth);
+            planner.setDay(appointmentEndDay);
+            planner.setAppointed(startHour, startMinute,NHour,Nminute);
+        }
+     }
+    }
+
+    cout<< h.getendHour()<< endl;
+   cout<<planner.getDay() << endl;
+    //cout <<Planner.getAppointed()<< endl/*
+   
+
+
     return 0;
 }
